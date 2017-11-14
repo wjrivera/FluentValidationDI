@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
 using FluentValidation.AspNetCore;
+using FluentValidationDI.Models;
 using FluentValidationDI.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,8 @@ namespace FluentValidationDI
                 .AddFluentValidation(fvc => 
                     fvc.RegisterValidatorsFromAssemblyContaining<PersonValidator>())
                     .AddJsonOptions(o => o.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+
+            services.AddTransient<IValidator<PersonModel>, PersonValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
